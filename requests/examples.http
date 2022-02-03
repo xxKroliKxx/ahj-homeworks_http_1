@@ -1,0 +1,18 @@
+GET http://localhost:8000/v1/tickets
+
+###
+
+GET http://localhost:8000/v1/tickets/6
+
+###
+
+POST http://localhost:8000/v1/tickets
+Content-Type: application/json
+
+{
+  "id": 6,
+  "name": "Задание 6",
+  "description": "Большое и очень важное описание пятого задания",
+  "status": 0,
+  "created": "2021-01-05"
+}
