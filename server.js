@@ -9,6 +9,8 @@ const v1Router = new Router();
 
 const tickets = ticketList()
 
+const port = process.env.PORT || 80
+
 appV1.use(BodyParser());
 
 v1Router.get('/tickets', (ctx, next) => {
@@ -43,7 +45,7 @@ app.use(async function (ctx, next) {
 app.use(Mount('/v1', appV1));
 
 
-const server = http.createServer(app.callback()).listen(8000);
+const server = http.createServer(app.callback()).listen(port);
 
 function ticketList() {
     return [
