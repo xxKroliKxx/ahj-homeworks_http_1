@@ -4,14 +4,9 @@ const Router = require('@koa/router');
 const Mount = require('koa-mount');
 const BodyParser = require('koa-bodyparser');
 
-const appV1 = new Koa();
-const v1Router = new Router();
-
 const tickets = ticketList()
 
-const port = process.env.PORT || 80
-
-appV1.use(BodyParser());
+const v1Router = new Router();
 
 v1Router.get('/tickets', (ctx, next) => {
     ctx.body = tickets;
@@ -32,6 +27,10 @@ v1Router.post('/tickets', (ctx, next) => {
     ctx.status = 200;
 });
 
+const appV1 = new Koa();
+
+appV1.use(BodyParser());
+
 appV1.use(v1Router.routes())
 
 const app = new Koa();
@@ -44,7 +43,7 @@ app.use(async function (ctx, next) {
 
 app.use(Mount('/v1', appV1));
 
-
+const port = process.env.PORT || 80
 const server = http.createServer(app.callback()).listen(port);
 
 function ticketList() {
