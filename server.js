@@ -39,6 +39,7 @@ app.use(async function (ctx, next) {
     await next();
     ctx.set('Access-Allow-Control', `*`);
     ctx.set('Access-Control-Allow-Methods', `POST, GET, OPTIONS`);
+    ctx.set('Access-Control-Allow-Origin', '*')
 });
 
 app.use(Mount('/v1', appV1));
