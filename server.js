@@ -3,6 +3,7 @@ const Koa = require('koa');
 const Router = require('@koa/router');
 const Mount = require('koa-mount');
 const BodyParser = require('koa-bodyparser');
+const cors = require('@koa/cors');
 
 const tickets = ticketList()
 
@@ -27,15 +28,8 @@ v1Router.post('/tickets', (ctx, next) => {
     tickets.forEach((e) => maxID = Math.max(maxID, e.id))
     let task = ctx.request.body;
     task.id = maxID + 1
-    tickets.push({
-        id: maxID,
-        name: task.name,
-        description: task.description,
-        status: task.status,
-        created: task.created
-    })
+    tickets.push(task)
     ctx.status = 200;
-    ctx.body = task
 });
 
 const appV1 = new Koa();
@@ -46,13 +40,7 @@ appV1.use(v1Router.routes())
 
 const app = new Koa();
 
-app.use(async function (ctx, next) {
-    await next();
-    ctx.set('Access-Allow-Control', `*`);
-    ctx.set('Access-Control-Allow-Methods', `POST, GET, OPTIONS`);
-    ctx.set('Access-Control-Allow-Origin', '*')
-});
-
+app.use(cors());
 app.use(Mount('/v1', appV1));
 
 const port = process.env.PORT || 80
