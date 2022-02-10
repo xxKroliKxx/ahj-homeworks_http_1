@@ -23,7 +23,11 @@ v1Router.get('/tickets/:id', (ctx, next) => {
 });
 
 v1Router.post('/tickets', (ctx, next) => {
-    tickets.push(ctx.request.body)
+    let maxID = -1;
+    tickets.forEach((e) => Math.max(maxID, e.id))
+    let task = ctx.request.body;
+    task.id = maxID + 1
+    tickets.push(task)
     ctx.status = 200;
 });
 
