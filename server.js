@@ -35,7 +35,7 @@ v1Router.post('/tickets', (ctx, next) => {
         created: task.created
     })
     ctx.status = 200;
-    ctx.body = tickets[tickets.length-1];
+    ctx.body = task
 });
 
 const appV1 = new Koa();
